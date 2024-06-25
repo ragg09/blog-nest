@@ -1,0 +1,25 @@
+services:
+  blog-be: 
+    container_name: blog-be
+    build: .
+    ports:
+      - 8000:3000
+    volumes:
+      - .:/app
+    depends_on:
+      - blog-db
+
+  blog-db:
+    image: mysql:8.0.33
+    container_name: blog-db
+    tty: true
+    restart: unless-stopped
+    ports:
+      - '33066:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: blog-db
+      MYSQL_USER: blog-db
+      MYSQL_PASSWORD: Password123
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
